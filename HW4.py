@@ -14,16 +14,16 @@ class Vehicle:
 # and will have seating_capacity own method
 class Bus(Vehicle):
     def __init__(self, max_speed, mileage, seating_capacity):
-        self.seating_capacity = seating_capacity
+        self.__seating_capacity = seating_capacity
         Vehicle.__init__(self, max_speed, mileage)
 
     def seating_capacity(self):
-        return self.seating_capacity
-
+        return self.__seating_capacity
 
 # 3. Determine which class a given Bus object belongs to (Check type of an object)
 School_bus = Bus(160, 100000, 40)
 print(f'type of School_bus object - {type(School_bus)}')
+print(f'seating capacity of School_bus - {School_bus.seating_capacity()}')
 
 
 # 4. Determine if School_bus is also an instance of the Vehicle class
@@ -57,23 +57,17 @@ class SchoolBus(School, Bus):
 # Both of them should have make_sound method. Create two instances, one of Bear and one of Wolf,
 # make a tuple of it and by using for call their action using the same method.
 class Bear:
-    def __init__(self, sound):
-        self.sound = sound
-
     def make_sound(self):
-        return f'{self.__class__.__name__} say - {self.sound}'
+        return 'Bear say - aaa'
 
 
 class Wolf:
-    def __init__(self, sound):
-        self.sound = sound
-
     def make_sound(self):
-        return f'{self.__class__.__name__} say - {self.sound}'
+        return 'Wolf say - auf'
 
 
-wolf_instance = Wolf('auf')
-bear_instance = Bear('aaa')
+wolf_instance = Wolf()
+bear_instance = Bear()
 
 animals = (wolf_instance, bear_instance)
 
@@ -91,9 +85,6 @@ zoo(animals)
 # otherwise return message: "Your city is too small".
 # 9. Override a printable string representation of the City class and return:
 # The population of the city {name} is {population}
-# 10*. Override magic method __add__() to perform the additional action
-# as 'multiply' (*) the value which is greater than 10.
-# And perform this add (+) of two instances.
 class City:
     def __init__(self, name, population):
         self.name = name
@@ -101,15 +92,11 @@ class City:
 
     def __new__(cls, name, population):
         instance = object.__new__(cls)
-        if population > 1500:
-            return instance
-        print(f'Your city ({name}) is too small')
+        return instance if  population > 1500 else f'Your city ({name}) is too small'
 
     def __str__(self):
         return f'The population of the city {self.name} is {self.population}'
 
-    def __add__(self, another_instance):
-        return another_instance * 10
 
 
 city_instance_0 = City('City_0', 200)
@@ -117,21 +104,39 @@ city_instance_1 = City('City_1', 1501)
 
 print(city_instance_1)
 
-print(city_instance_1 + 20)
+
+# 10*. Override magic method __add__() to perform the additional action
+# as 'multiply' (*) the value which is greater than 10.
+# And perform this add (+) of two instances.
+class Example_add:
+    def __init__(self, value):
+        self.value = value
+    
+
+    def __add__(self, another_instance):
+        return self.value * another_instance.value if any((self.value > 10, another_instance.value > 10)) else self.value + another_instance.value 
+
+
+Example_add_instance_0 = Example_add(3)
+Example_add_instance_1 = Example_add(4)
+Example_add_instance_2 = Example_add(12)
+print(f'{Example_add_instance_0.value} + {Example_add_instance_1.value} = {Example_add_instance_0 + Example_add_instance_1}')
+print(f'{Example_add_instance_0.value} + {Example_add_instance_2.value} = {Example_add_instance_0 + Example_add_instance_2}')
+print(f'{Example_add_instance_1.value} + {Example_add_instance_2.value} = {Example_add_instance_1 + Example_add_instance_2}')
 
 
 # 11. The __call__ method enables Python programmers to write classes where the instances behave like functions
 # and can be called like a function.
 # Create a new class with __call__ method and define this call to return sum.
 class Callable:
-    def __init__(self, value):
-        self.sum = value
+    def __init__(self, *args):
+        self.sum = sum(*args)
 
     def __call__(self):
         return self.sum
 
 
-callable_object_instance = Callable(10)
+callable_object_instance = Callable((10, 20, 30))
 print(callable_object_instance())
 
 
