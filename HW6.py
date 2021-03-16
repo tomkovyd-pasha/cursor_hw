@@ -152,6 +152,9 @@ class Pest(Pests):
                         print(f'    {x.vegetable_type} {x.index} not deleted because state - {x.state}')
                     return
 
+    def __repr__(self):
+        return f'pests {self. pests_type}(quantity - {self.quantity})'
+
     def eat(self, plants):
         print('Pests try to eat plants')
         for pest_instance in range(0, self.quantity):
@@ -182,6 +185,9 @@ class Tomato(Vegetables):
     def print_state(self):
         print(f'    {self.vegetable_type} {self.index} is {self.state}')
 
+    def __repr__(self):
+        return f'tomato {self. name}(index - {self.index})'
+
 
 class TomatoBush:
     def __init__(self, num):
@@ -201,6 +207,9 @@ class TomatoBush:
 
     def provide_harvest(self):
         self.tomatoes = []
+
+    def __repr__(self):
+        return f'tomato bush (tomatoes - {len(self.tomatoes)})'
 
 
 class Apple(Fruit):
@@ -226,6 +235,9 @@ class Apple(Fruit):
     def print_state(self):
         print(f'    {self.fruits_type} {self.index} is {self.state}')
 
+    def __repr__(self):
+        return f'apple {self. name}(index - {self.index})'
+
 
 class AppleTree:
     def __init__(self, num):
@@ -245,6 +257,9 @@ class AppleTree:
 
     def provide_harvest(self):
         self.apples = []
+
+    def __repr__(self):
+        return f'apple tree (apples - {len(self.apples)})'
 
 
 class StarGardener(Gardener):
@@ -283,6 +298,9 @@ class StarGardener(Gardener):
                     for x in i.tomatoes:
                         print(f'    {x.vegetable_type} {x.index} is ripe - {x.state == 3}')
         print('Gardner is finished checking states')
+
+    def __repr__(self):
+        return f'gardener {self. name} (plants - {self.plants})'
 
 
 tomato_bush = TomatoBush(7)
