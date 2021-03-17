@@ -135,21 +135,21 @@ class Pest(Pests):
     def eat_realization(plants):
         states_to_eat = 2, 3
         for i in plants:
-            try:
-                for x in i.apples:
-                    if x.state in states_to_eat:
-                        print(f'    {x.fruits_type} {x.index} deleted')
-                        i.apples.remove(x)
-                    else:
-                        print(f'    {x.fruits_type} {x.index} not deleted because state - {x.state}')
-                    return
-            except AttributeError:
+            if isinstance(i, TomatoBush):
                 for x in i.tomatoes:
                     if x.state in states_to_eat:
                         print(f'    {x.vegetable_type} {x.index} deleted')
                         i.tomatoes.remove(x)
                     else:
                         print(f'    {x.vegetable_type} {x.index} not deleted because state - {x.state}')
+                    return
+            elif isinstance(i, AppleTree):
+                for x in i.apples:
+                    if x.state in states_to_eat:
+                        print(f'    {x.fruits_type} {x.index} deleted')
+                        i.apples.remove(x)
+                    else:
+                        print(f'    {x.fruits_type} {x.index} not deleted because state - {x.state}')
                     return
 
     def __repr__(self):
@@ -285,37 +285,39 @@ class StarGardener(Gardener):
         print('Gardner is finished')
 
     @staticmethod
-    def poison_pests():
-        pests.quantity -= 3
+    def poison_pests(quantity_of_pests_to_delete):
+        if pests.quantity < quantity_of_pests_to_delete:
+            pests.quantity = 0
+        else:
+            pests.quantity -= quantity_of_pests_to_delete
 
     def check_states(self):
-        print('Gardner is checking states')
-        for i in self.plants:
-                try:
-                    for x in i.apples:
-                        print(f'    {x.fruits_type} {x.index} is ripe - {x.state == 3}')
-                except AttributeError:
-                    for x in i.tomatoes:
-                        print(f'    {x.vegetable_type} {x.index} is ripe - {x.state == 3}')
-        print('Gardner is finished checking states')
+        for all_plants in self.plants:
+            if isinstance(all_plants, TomatoBush):
+                return all(map(lambda x: x.state == 3, all_plants.tomatoes))
+            elif isinstance(all_plants, AppleTree):
+                return all(map(lambda x: x.state == 3, all_plants.apples))
 
     def __repr__(self):
         return f'gardener {self. name} (plants - {self.plants})'
 
 
-tomato_bush = TomatoBush(7)
-apple_tree = AppleTree(5)
+tomato_bush = TomatoBush(4)
+apple_tree = AppleTree(3)
 pests = Pest('worm', 10)
 tom = StarGardener('Tom', [tomato_bush, apple_tree])
+# creating only one garden instance with vegetables and fruits
 garden = Garden(vegetables=tomato_bush.tomatoes, fruits=apple_tree.apples, pests=pests, gardener=tom)
 garden.show_the_garden()
-
-
-for i in range(3):
+state = tom.check_states()
+if not state:
     tom.handling()
-    tom.poison_pests()
+for i in range(2):
+    tom.handling()
+    tom.poison_pests(7)
     pests.eat([tomato_bush, apple_tree])
-    tom.check_states()
-    tom.harvest()
+
+garden.show_the_garden()
+tom.harvest()
 
 

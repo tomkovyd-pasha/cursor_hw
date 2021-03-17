@@ -67,10 +67,3 @@ for i in range(3):
     with context_manager_openpyxl(f'sample{i}.xlsx') as ex_file:
         ex_file_ws = ex_file.create_sheet(0)
         ex_file_ws['A1'] = f'last modified date - {datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}'
-
-
-
-
-
-
-
