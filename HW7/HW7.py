@@ -1,6 +1,6 @@
 import pickle
 from statistics import mean
-# import openpyxl
+import openpyxl
 import datetime
 
 
@@ -44,29 +44,29 @@ with open('task2', 'rb') as task_2_file:
     print(f'Average of task2 file values - {round(mean(task_2_file_content), 2)}')
 
 
-# # 3
-# class context_manager_openpyxl:
-#     def __init__(self, filename):
-#         try:
-#             self.excel_file = openpyxl.load_workbook(filename)
-#         except FileNotFoundError:
-#             self.excel_file = openpyxl.Workbook()
-#         finally:
-#             self.filename = filename
-#
-#     def __enter__(self):
-#         return self.excel_file
-#
-#     def __exit__(self, exc_type, exc_val, exc_trc):
-#         self.excel_file.save(self.filename)
-#         self.excel_file.close()
-#         return True
-#
-#
-# for i in range(10):
-#     with context_manager_openpyxl(f'sample{i}.xlsx') as ex_file:
-#         ex_file_ws = ex_file.create_sheet(0)
-#         ex_file_ws['A1'] = f'last modified date - {datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}'
+# 3
+class context_manager_openpyxl:
+    def __init__(self, filename):
+        try:
+            self.excel_file = openpyxl.load_workbook(filename)
+        except FileNotFoundError:
+            self.excel_file = openpyxl.Workbook()
+        finally:
+            self.filename = filename
+
+    def __enter__(self):
+        return self.excel_file
+
+    def __exit__(self, exc_type, exc_val, exc_trc):
+        self.excel_file.save(self.filename)
+        self.excel_file.close()
+        return True
+
+
+for i in range(3):
+    with context_manager_openpyxl(f'sample{i}.xlsx') as ex_file:
+        ex_file_ws = ex_file.create_sheet(0)
+        ex_file_ws['A1'] = f'last modified date - {datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}'
 
 
 
