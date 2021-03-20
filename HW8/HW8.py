@@ -183,7 +183,6 @@ while True:
         if isinstance(animal, Predators):
             print(f'{animal} selected')
         animal.eat(forest=forest)
-    for animal in forest:
         if animal.current_power == 0:
             print(f'{animal} died because power = {animal.current_power}')
             forest.remove_animal(animal)
