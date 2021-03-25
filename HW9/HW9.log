@@ -1,0 +1,37 @@
+2021-03-25 22:44:36,332 - INFO - user start calc program
+2021-03-25 22:44:36,332 - INFO - user try to insert first number
+2021-03-25 22:44:39,632 - INFO - user inserted first number as "85"
+2021-03-25 22:44:39,633 - INFO - user try to insert second number
+2021-03-25 22:44:40,832 - INFO - user inserted second number as "0"
+2021-03-25 22:44:43,884 - INFO - user select operator as "/"
+2021-03-25 22:44:43,884 - ERROR - user tried to divide by zero
+2021-03-25 22:44:43,885 - INFO - operation success, result = "0"
+2021-03-25 22:44:43,885 - ERROR - user tried to divide by zero
+2021-03-25 22:44:46,246 - INFO - user want to start calc program once more
+2021-03-25 22:44:46,246 - INFO - user start calc program
+2021-03-25 22:44:46,246 - INFO - user try to insert first number
+2021-03-25 22:45:07,633 - INFO - user inserted first number as "57"
+2021-03-25 22:45:07,633 - INFO - user try to insert second number
+2021-03-25 22:45:09,735 - INFO - user inserted second number as "5"
+2021-03-25 22:45:11,848 - ERROR - user choose incorrect operator - pow_
+2021-03-25 22:45:14,128 - INFO - user select operator as "** n"
+2021-03-25 22:45:14,128 - INFO - operation success, result = "601692057"
+2021-03-25 22:45:17,741 - INFO - user want to start calc program once more
+2021-03-25 22:45:17,741 - INFO - user start calc program
+2021-03-25 22:45:17,741 - INFO - user try to insert first number
+2021-03-25 22:45:21,514 - INFO - user inserted first number as "75"
+2021-03-25 22:45:21,515 - INFO - user try to insert second number
+2021-03-25 22:45:22,477 - INFO - user inserted second number as "4"
+2021-03-25 22:45:25,187 - INFO - user select operator as "** (1/n)"
+2021-03-25 22:45:25,188 - INFO - operation success, result = "2.942830956382712"
+2021-03-25 22:45:29,584 - INFO - user want to start calc program once more
+2021-03-25 22:45:29,584 - INFO - user start calc program
+2021-03-25 22:45:29,585 - INFO - user try to insert first number
+2021-03-25 22:45:37,020 - INFO - user inserted first number as "84"
+2021-03-25 22:45:37,020 - INFO - user try to insert second number
+2021-03-25 22:45:40,895 - INFO - user inserted second number as "34"
+2021-03-25 22:45:43,834 - ERROR - user choose incorrect operator - root_
+2021-03-25 22:45:48,061 - ERROR - user choose incorrect operator - root)=__
+2021-03-25 22:45:50,991 - INFO - user select operator as "** (1/n)"
+2021-03-25 22:45:50,991 - INFO - operation success, result = "1.1391907491262263"
+2021-03-25 22:45:53,780 - INFO - user finished using calc program
