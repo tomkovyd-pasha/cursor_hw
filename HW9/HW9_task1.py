@@ -59,7 +59,7 @@ def get_operator_from_str(str_value):
 
 def result_calc_value(first_value, second_value, __operator):
     try:
-        return eval(f'{first_value} {__operator.replace("n", str(second_value))}') if __operator in ('** n', '** (1/n)', '/ n * 100') else eval(f'{first_value} {__operator} {second_value}')
+        return eval(f'({first_value}) {__operator.replace("n", str(second_value))}') if __operator in ('** n', '** (1/n)', '/ n * 100') else eval(f'({first_value}) {__operator} ({second_value})')
     except ZeroDivisionError:
         logging.error(f'user tried to divide by zero')
         return 0
@@ -73,9 +73,13 @@ def calc():
     b = get_number_from_str(input('please input second value (must be int or float or str with base 10) '))
     logging.info(f'user inserted second number as "{b}"')
     c = get_operator_from_str(input(f'please input operator value from list ({"".join([str(x + ", ") for x in operations.keys()])[:-2]}) '))
+    while c == '** (1/n)' and a < 0:
+        logging.info(f'user select bad first value and operator. there is no root for negative numbers')
+        a = get_number_from_str(input('please reinput first value (must be int or float or str with base 10 and greater than or equal 0, because operator - root) '))
     logging.info(f'user select operator as "{c}"')
-    logging.info(f'operation success, result = "{result_calc_value(a, b, c)}"')
-    print(f'result = {result_calc_value(a, b, c)}')
+    result = result_calc_value(a, b, c)
+    logging.info(f'operation success, result = "{result}"')
+    print(f'result = {result}')
 
 
 while True:
@@ -86,4 +90,3 @@ while True:
         continue
     logging.info('user finished using calc program')
     break
-

@@ -35,12 +35,6 @@ class VacuumCleaner:
         while True:
             time.sleep(1)
             try:
-                self.wash()
-            except EmptyWaterAmountException as error:
-                print('к-сть води = 0')
-            except GarbageOverflowException as error:
-                print('Почистіть мене')
-            try:
                 self.vacuum_cleaner()
             except LowBatteryException as error:
                 iter_for_end -= 1
@@ -49,9 +43,16 @@ class VacuumCleaner:
                     break
             except EmptyBatteryException as error:
                 print('Занесіть мене на зарядку')
+                break
+            try:
+                self.wash()
+            except EmptyWaterAmountException as error:
+                print('к-сть води = 0')
+            except GarbageOverflowException as error:
+                print('Почистіть мене')
             print('move')
-            self._charge -= self.charge_reduce
-            self._water_amount -= self.water_amount_reduce
+            self._charge = max(self._charge - self.charge_reduce, 0)  # if self._charge - self.charge_reduce > 0 else 0
+            self._water_amount = max(self._water_amount - self.water_amount_reduce, 0)  # if self._water_amount - self.water_amount_reduce > 0 else 0
             self._garbage_capacity += self.garbage_capacity_increase
             print(f'Заряд = {self._charge}, вода = {self._water_amount}, к-сть сміття = {self._garbage_capacity}')
             # print(self._charge, self._water_amount, self._garbage_capacity)
@@ -65,12 +66,13 @@ class VacuumCleaner:
         print('wash')
 
     def vacuum_cleaner(self):
+        if self._charge > 0:
+            print('vacuum_cleaner')
+        else:
+            raise EmptyBatteryException
         if self._charge < self.max_charge * 0.2:
             raise LowBatteryException
-        if self._charge <= 0:
-            raise EmptyBatteryException
-        print('vacuum_cleaner')
 
 
-a = VacuumCleaner(50, 0, 50)
+a = VacuumCleaner(40, 0, 50)
 a.move()
