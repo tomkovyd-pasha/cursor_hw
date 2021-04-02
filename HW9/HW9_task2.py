@@ -40,6 +40,7 @@ class VacuumCleaner:
                 iter_for_end -= 1
                 print('заряд < 20%')
                 if iter_for_end == 0:
+                    print('Занесіть мене на зарядку')
                     break
             except EmptyBatteryException as error:
                 print('Занесіть мене на зарядку')
