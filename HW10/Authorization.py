@@ -44,7 +44,8 @@ class Authorization:
         self._password = password
         if self.user_email_exist_check(self.get_email):
             if self.password_correct_check(self.get_password):
-                self.authorization_token = UserToken(uuid.uuid4())
+                self.authorization()
+                # self.authorization_token = UserToken(uuid.uuid4())
             else:
                 raise PasswordIncorrect
         else:
@@ -65,6 +66,10 @@ class Authorization:
     @staticmethod
     def user_email_exist_check(user_name_email: str):
         return user_name_email in DATABASE_USERS_EMAILS.keys()
+
+    def authorization(self):
+        self.authorization_token = UserToken(uuid.uuid4())
+        return self.authorization_token
 
 
 # reg_instance_0 = Register('Pasha', 'DCQrZq_JUOSwkLDw', 'Pasha@gmail.com')

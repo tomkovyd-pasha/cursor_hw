@@ -39,6 +39,10 @@ class PasswordLengthError(BaseException):
     pass
 
 
+class UserNameIncorrect(BaseException):
+    pass
+
+
 NOT_ALLOWED_SYMBOLS = ''.join(set(string.punctuation.__add__('? ')) - {'.', '_', '-', '@'})
 EMAILS = ('@gmail.com', '@yahoo.com', '@onmicrosoft.com', '@examplemail.com')
 # print(string.ascii_letters + string.digits + '_.@-')
@@ -51,8 +55,12 @@ DATABASE_USERS_EMAILS['Pasha@gmail.com'] = 'DCQrZq_JUOSwkLDw'
 
 class Register:
     def __init__(self, name, password, email):
-        if self.user_exist_check(email) == '200':
+        if self.user_exist_check(email):
+            raise UserExistError
+        elif self.name_correct_check(name):
             self._name = name
+        else:
+            raise UserNameIncorrect
         if self.password_lenght_check(password):
             if self.password_correct_check(password):
                 self._password = password
@@ -67,6 +75,7 @@ class Register:
 
     def add_new_user(self):
         DATABASE_USERS_EMAILS[self._email] = self._password
+        return '200'
         # print(f'user {self.get_name} created with password ({self.get_password}) and email ({self._email})')
 
     @property
@@ -91,9 +100,11 @@ class Register:
 
     @staticmethod
     def user_exist_check(user_name_email: str):
-        if user_name_email in DATABASE_USERS_EMAILS.keys():
-            raise UserExistError
-        return '200'
+        return user_name_email in DATABASE_USERS_EMAILS.keys()
+
+    @staticmethod
+    def name_correct_check(name: str):
+        return not compare_strings(name, NOT_ALLOWED_SYMBOLS)
 
 
 # reg_instance_0 = Register('Pasha', 'DCQrZq_JUOSwkLDw', 'Pasha@gmail.com')

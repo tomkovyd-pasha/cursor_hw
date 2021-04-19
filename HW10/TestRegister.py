@@ -32,14 +32,19 @@ class TestRegister(unittest.TestCase):
             self.reg_instance_0 = Rg.Register('Pasha', 'DCQrZq_JUOSwkLDw', 'Pasha@gmail.com')
         with self.assertRaises(Rg.EmailIncorrect):
             self.reg_instance_1 = Rg.Register('Pasha', 'DCQrZq_w__incorrect__', 'Pasha_2@gma?il.com')
-        with self.assertRaises(Rg.PasswordIncorrect):
-            self.reg_instance_2 = Rg.Register('Pasha', '?///#^&__12', 'Pasha_2@gmail.com')
+
+        for x in ['jlV^pdZRD', 'w%RfyzvgMcmCjOqSRBrD', 'JTs_r`-euVvG-', 'Ljq)JtQFg2z8IULe.', 'p@]Nlcft4Jz8-HlWu', '?PcL..zsuBPg7PbqDey', '&fjvEAv3NO.GO', '69hvZk7<ih', '~02h7jzu', 'y_B=rELFx.uufg']:
+            with self.assertRaises(Rg.PasswordIncorrect):
+                self.reg_instance_2 = Rg.Register('Pasha', x, 'Pasha_2@gmail.com')
+
         with self.assertRaises(Rg.PasswordLengthError):
             self.reg_instance_3 = Rg.Register('Pasha', 'psaje', 'Pasha_2@gmail.com')
 
+        for i in {'pasha~', 'pasha?', 'pas$a', 'pash{a', 'pas#a', 'pas,sha', '|pasha'}:
+            with self.assertRaises(Rg.UserNameIncorrect):
+                self.reg_instance_4 = Rg.Register(i, 'DCQrZq_JUOSwkLDw', 'Pasha224@gmail.com')
+
     def test_registration(self):
         for user_instance in self.reg_instances:
-            user_instance.add_new_user()
-            self.assertTrue(len(user_instance.get_password) > 0)
+            self.assertTrue(user_instance.add_new_user() == '200')
             print(f'{user_instance}')
-

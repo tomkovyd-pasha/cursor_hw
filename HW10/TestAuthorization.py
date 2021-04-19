@@ -22,5 +22,6 @@ class TestAuthorization(unittest.TestCase):
 
     def test_authorization(self):
         for user_instance in self.auth_instances:
-            self.assertTrue(user_instance.authorization_token is not None)
+            self.assertTrue(user_instance.authorization() is not None)
+            # self.assertTrue(user_instance.authorization_token is not None)
             print(f'token for {user_instance} exist')

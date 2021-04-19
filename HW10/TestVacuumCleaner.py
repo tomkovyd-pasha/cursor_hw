@@ -44,6 +44,52 @@ class TestVacuumCleaner(unittest.TestCase):
             vacuum_cleaner_instance.move(7)
             print(f'{"-" * 10}FinishedTest{vacuum_cleaner_instance}{"-" * 10}\n')
 
+    def test_vacuum_cleaner(self):
 
+        # EmptyBatteryException
+        with self.assertRaises(Vc.EmptyBatteryException):
+            self.vc_instance = Vc.VacuumCleaner(0, 11, 40).vacuum_cleaner()
+        with self.assertRaises(Vc.EmptyBatteryException):
+            self.vc_instance = Vc.VacuumCleaner(-2, 11, 40).vacuum_cleaner()
+        self.vc_instance_0 = Vc.VacuumCleaner(20, 14, 25)
+        for i in range(20):
+            self.vc_instance_0._charge -= i
+        with self.assertRaises(Vc.EmptyBatteryException):
+            self.vc_instance_0.vacuum_cleaner()
 
+        # GarbageOverflowException
+        with self.assertRaises(Vc.GarbageOverflowException):
+            self.vc_instance = Vc.VacuumCleaner(50, 80, 40).vacuum_cleaner()
+        with self.assertRaises(Vc.GarbageOverflowException):
+            self.vc_instance = Vc.VacuumCleaner(50, 1000, 40).vacuum_cleaner()
+        self.vc_instance_1 = Vc.VacuumCleaner(20, 60, 25)
+        for i in range(21):
+            self.vc_instance_1._garbage_capacity += i
+        with self.assertRaises(Vc.GarbageOverflowException):
+            self.vc_instance_1.vacuum_cleaner()
 
+        # LowBatteryException
+        self.vc_instance_2 = Vc.VacuumCleaner(10, 14, 25)
+        for i in range(3):
+            self.vc_instance_2._charge -= 3
+        with self.assertRaises(Vc.LowBatteryException):
+            self.vc_instance_2.vacuum_cleaner()
+
+        self.vc_instance_3 = Vc.VacuumCleaner(20, 14, 25)
+        for i in range(16):
+            self.vc_instance_3._charge -= 1
+        with self.assertRaises(Vc.LowBatteryException):
+            self.vc_instance_3.vacuum_cleaner()
+
+    def test_wash(self):
+        with self.assertRaises(Vc.EmptyWaterAmountException):
+            self.vc_instance = Vc.VacuumCleaner(10, 14, 0).wash()
+
+        with self.assertRaises(Vc.EmptyWaterAmountException):
+            self.vc_instance = Vc.VacuumCleaner(10, 14, -5).wash()
+
+        self.vc_instance_4 = Vc.VacuumCleaner(20, 14, 10)
+        for i in range(10):
+            self.vc_instance_4._water_amount -= 1
+        with self.assertRaises(Vc.EmptyWaterAmountException):
+            self.vc_instance_4.wash()
