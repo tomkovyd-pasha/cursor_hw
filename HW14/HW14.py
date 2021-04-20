@@ -20,7 +20,7 @@ def find_all_by_pattern(directory_path, pattern):
     files = glob.glob(f'{directory_path}**/*.py', recursive=True)
     container = set()
     with ThreadPoolExecutor() as pool:
-        result = pool.map(find_by_patter, files, pattern)
+        result = pool.map(find_by_patter, files, pattern * len(files))
         for res in result:
             container.update(res)
     return container
@@ -29,7 +29,7 @@ def find_all_by_pattern(directory_path, pattern):
 if __name__ == "__main__":
     start = time.time()
     path = 'D:\\PythonProjects\\Cursor\\cursor_hw'
-    search_by_pattern = find_all_by_pattern(path, pattern='import')
+    search_by_pattern = find_all_by_pattern(path, pattern=['import'])
     end = time.time() - start
     for line in search_by_pattern:
         print(line)
